@@ -1,3 +1,41 @@
+import bank from "./bank.js";
+
+// Alt som har med arbeid å gjøre
+const bankTotalElement = document.getElementById("bankTotal");
+const workButtonElement = document.getElementById("btnWork");
+
+const updateBankTotalElement = (newTotal) => {
+    bankTotalElement.innerText = newTotal
+}
+
+const handleWorkButtonClicked = () => {
+    bank.work()
+    const newTotal = bank.getPaycheck()
+    updateBankTotalElement(newTotal)
+}
+
+workButtonElement.addEventListener('click', handleWorkButtonClicked)
+
+// deposit to bank 
+const balanceTotalElement = document.getElementById("BalanceTotal");
+const bankDepositElement = document.getElementById("btnDeposit");
+
+// må ha inn en linje her sånn at balance forblir det samme
+const updateBalanceTotalElement = (newBalance) => {
+    balanceTotalElement.innerText = newBalance
+}
+
+const handleDepositButtonClicked = () => {
+    bank.changeBankBalance()
+    updateBalanceTotalElement(bank.getBankBalance())
+    updateBankTotalElement(bank.getPaycheck())
+}
+
+
+bankDepositElement.addEventListener('click', handleDepositButtonClicked)
+
+
+// Alt som har med shopping å gjøre 
 const laptopsElement = document.getElementById("laptops");
 const priceElement = document.getElementById("price");
 const productNameElement = document.getElementById("productName")
@@ -38,7 +76,6 @@ const createSpecList = (specs, specsElement) => {
     for(let i = 0; i < specs.length; i++) {
         const newListElement = document.createElement('li')
         newListElement.innerText = specs[i];
-
         specsElement.appendChild(newListElement);
     }
 }
@@ -52,6 +89,9 @@ const handleDropdownChange = e => {
     specsElement.innerHTML = ''
     createSpecList(selectedLaptop.specs, specsElement)
 
+
 }
 
 laptopsElement.addEventListener("change", handleDropdownChange);
+
+

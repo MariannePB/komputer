@@ -6,8 +6,10 @@ $primary-color-dark-blue: #292D39;
 
 $primary-btn-color: #E2AC05;
 $primary-btn-color-hover: #fccc3f;
-$secondary-btn-color: #9DE3FF;
+$secondary-btn-color: #39c7ff;
+$secondary-btn-color-hover: #9DE3FF;
 $approve-green: #63CA3E;
+$approve-green-hover: #55f31c;
 
 
 /*FONTS & WEIGHTS*/
@@ -71,6 +73,9 @@ section{
     font-weight: $xbold-weight;
     border: none;
 }
+.secondaryBtn:hover{
+    background-color: $secondary-btn-color-hover;
+}
 .buyBtn{
     padding: 10px 20px 10px 20px;
     border-radius: 20px;
@@ -78,8 +83,30 @@ section{
     font-weight: $xbold-weight;
     border: none;
 }
+.buyBtn:hover{
+    background-color: $approve-green-hover;
+}
 #picture{
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+#price{
+    font-weight: $xbold-weight;
+    font-size: 1.5rem;
+    padding-top: 20%;
+}
+.stock{
+    padding-bottom: 5%;
+}
+
+/* LARGE*/
+@media screen and (min-width: 2000px){
+}
+
+/* MOBILE*/
+@media screen and (max-width: 600px){
+.personalInfo{
+    flex-direction: column;
+}
 }

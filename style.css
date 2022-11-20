@@ -61,9 +61,13 @@ section {
 .secondaryBtn {
   padding: 10px 20px 10px 20px;
   border-radius: 20px;
-  background-color: #9DE3FF;
+  background-color: #39c7ff;
   font-weight: 700;
   border: none;
+}
+
+.secondaryBtn:hover {
+  background-color: #9DE3FF;
 }
 
 .buyBtn {
@@ -74,9 +78,31 @@ section {
   border: none;
 }
 
+.buyBtn:hover {
+  background-color: #55f31c;
+}
+
 #picture {
   width: 100%;
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
+}
+
+#price {
+  font-weight: 700;
+  font-size: 1.5rem;
+  padding-top: 20%;
+}
+
+.stock {
+  padding-bottom: 5%;
+}
+
+/* LARGE*/
+/* MOBILE*/
+@media screen and (max-width: 600px) {
+  .personalInfo {
+    flex-direction: column;
+  }
 }/*# sourceMappingURL=style.css.map */

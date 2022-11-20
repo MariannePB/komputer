@@ -22,14 +22,16 @@
             <section>
                 <h2>Joe Lennon</h2>
                 <p>Your current balance</p>
+                <p id="BalanceTotal">0</p>
                 <button class="primaryBtn" id="test">Apply for a loan</button>
             </section>
 
             <section>
                 <h2>Attend work</h2>
-                <p>Total earnings</p>
-                <button class="primaryBtn" id="#">Deposit to bank</button>
-                <button class="secondaryBtn" id="#">Work more</button>
+                <label for="bankTotal">Total earnings</label>
+                <p id="bankTotal">0</p>
+                <button class="primaryBtn" id="btnDeposit">Deposit to bank</button>
+                <button class="secondaryBtn" id="btnWork">Work more</button>
             </section>
         </div>
         <div class="heading">
@@ -57,6 +59,6 @@
         </div>
         
     </main>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
