@@ -1,6 +1,6 @@
 import bank from "./bank.js";
 
-// Alt som har med arbeid å gjøre
+// Work actions
 const bankTotalElement = document.getElementById("bankTotal");
 const workButtonElement = document.getElementById("btnWork");
 
@@ -16,23 +16,24 @@ const handleWorkButtonClicked = () => {
 
 workButtonElement.addEventListener('click', handleWorkButtonClicked)
 
-// deposit to bank 
+// Deposit to bank 
 const balanceTotalElement = document.getElementById("BalanceTotal");
 const bankDepositElement = document.getElementById("btnDeposit");
 
-// må ha inn en linje her sånn at balance forblir det samme
 const updateBalanceTotalElement = (newBalance) => {
     balanceTotalElement.innerText = newBalance
 }
 
 const handleDepositButtonClicked = () => {
-    bank.changeBankBalance()
+    bank.takeSalary()
     updateBalanceTotalElement(bank.getBankBalance())
     updateBankTotalElement(bank.getPaycheck())
+    updateLoanTotalElement(bank.getOutstandingLoans())
 }
 
 
 bankDepositElement.addEventListener('click', handleDepositButtonClicked)
+
 
 
 // Alt som har med shopping å gjøre 
@@ -43,14 +44,14 @@ const productDescriptionElement = document.getElementById("description")
 const specsElement = document.getElementById("specs")
 const productImg = document.getElementById("picture")
 
-const baseUrl = 'https://noroff-komputer-store-api.herokuapp.com/'
+const baseUrl = 'https://computer-api-production.up.railway.app/'
 
 
 //Storing content
 let laptops = [];
 
 //API Fetching
-fetch("https://noroff-komputer-store-api.herokuapp.com/computers")
+fetch("https://computer-api-production.up.railway.app/computers")
     .then(response => response.json())
     .then(data => laptops = data)
     .then(laptops => addLaptopsToDropdown(laptops));
@@ -94,4 +95,53 @@ const handleDropdownChange = e => {
 
 laptopsElement.addEventListener("change", handleDropdownChange);
 
+// Applying for a loan
+const loanButtonElement = document.getElementById("loanBtn");
+
+const handleLoan = () => {
+    const totalLoan = prompt("Please enter the amount of money you wish to loan:");
+
+    if (totalLoan  >= bank.getBankBalance() * 2 && totalLoan != null) { 
+        alert(`You got approved for a loan of ${totalLoan} NOK`);
+
+        const change = parseFloat(totalLoan) + bank.getBankBalance();
+        bank.takeLoan(parseFloat(totalLoan));
+        console.log(change);
+
+    } else {
+        alert("You cant get a loan, the balance is too low balance or you did not enter a number");
+    }
+
+
+}
+loanButtonElement.addEventListener("click", handleLoan);
+
+// display outstanding loan
+const loanTotalElement = document.getElementById("outstandingLoan");
+
+const updateLoanTotalElement = (newLoanTotal) => {
+    loanTotalElement.innerText = newLoanTotal;
+}
+const handleLoanButtonClicked = () => {
+    const newLoanTotal = bank.getOutstandingLoans()
+    updateLoanTotalElement(newLoanTotal);
+}
+
+loanButtonElement.addEventListener("click", handleLoanButtonClicked);
+
+// Deposit to loan 
+const outstandingLoanTotalElement = document.getElementById("outstandingLoan");
+const loanDepositElement = document.getElementById("loanBtn");
+
+const updateOutstandingLoanTotalElement = (newLoanBalance) => {
+    outstandingLoanTotalElement.innerText = newLoanBalance
+}
+
+const handleLoanDepositButtonClicked = () => {
+    bank.getOutstandingLoans()
+    updateOutstandingLoanTotalElement(bank.getBankBalance())
+}
+
+
+loanDepositElement.addEventListener('click', handleLoanDepositButtonClicked)
 

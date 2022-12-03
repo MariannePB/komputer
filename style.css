@@ -51,7 +51,7 @@ section {
   background-color: #E2AC05;
   font-weight: 700;
   border: none;
-  margin-right: 3%;
+  margin: 3%;
 }
 
 .primaryBtn:hover {
@@ -64,6 +64,7 @@ section {
   background-color: #39c7ff;
   font-weight: 700;
   border: none;
+  margin: 3%;
 }
 
 .secondaryBtn:hover {
@@ -97,6 +98,10 @@ section {
 
 .stock {
   padding-bottom: 5%;
+}
+
+#outstandingLoan {
+  color: red;
 }
 
 /* LARGE*/

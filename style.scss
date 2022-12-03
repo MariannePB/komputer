@@ -61,10 +61,11 @@ section{
     background-color: $primary-btn-color;
     font-weight: $xbold-weight;
     border: none;
-    margin-right: 3%;
+    margin: 3%;
 }
 .primaryBtn:hover{
     background-color: $primary-btn-color-hover;
+
 }
 .secondaryBtn{
     padding: 10px 20px 10px 20px;
@@ -72,6 +73,7 @@ section{
     background-color: $secondary-btn-color;
     font-weight: $xbold-weight;
     border: none;
+    margin: 3%;
 }
 .secondaryBtn:hover{
     background-color: $secondary-btn-color-hover;
@@ -98,6 +100,9 @@ section{
 }
 .stock{
     padding-bottom: 5%;
+}
+#outstandingLoan{
+    color: red;
 }
 
 /* LARGE*/
