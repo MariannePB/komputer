@@ -1,6 +1,6 @@
 let paycheck = 0
 const earnings = 100
-let bankBalance = 0
+let bankBalance = 0 // should always be raw balance, no loans
 let outstandingLoans = 0
 
 // Arbeide, altså få penger på konto
@@ -23,25 +23,41 @@ const getPaycheck = () => {
 
 // denne må skrives om, slik at jeg ikke "kjøper" noe her men setter pengene inn i banken
 const buy = (price) => {
-    bankBalance -= price
+    if (price < getBankBalance()) {
+        bankBalance -= price;
+        return true;
+    } else {
+        return false;
+    }
+    
 }
 
-/* // repay loans
+// repay loans
 const repay = () =>{
-    0 + outstandingLoans
+    if (outstandingLoans >= paycheck) {
+        outstandingLoans -= paycheck;
+        bankBalance += paycheck;
+        paycheck = 0;
+    } else {
+        paycheck -= outstandingLoans;
+        bankBalance += outstandingLoans;
+        outstandingLoans = 0;
+    }
 }
-*/
+
 //update state on screen for loan
 const getOutstandingLoans = () => {
     return outstandingLoans
 }
 const takeLoan =(amount) => {
-    console.log(`taking loan of ${amount}`)
+    if (amount == "" || isNaN(amount) || outstandingLoans > 0 || amount > bankBalance * 2) {
+        return false;
+    }
     outstandingLoans += amount;
+    return true;
 }
 
 const takeSalary = () => {
-    console.log(outstandingLoans)
     if (outstandingLoans == 0) {
         bankBalance += paycheck;
         paycheck = 0;
@@ -49,19 +65,16 @@ const takeSalary = () => {
     } else {
         const loanPayment = paycheck / 10;
         if (outstandingLoans < loanPayment) {
-            console.log(`this is the loanPayment:${loanPayment}`)
             const salaryToPay = paycheck;
             outstandingLoans = 0; 
             changeBankBalance(salaryToPay);
             paycheck = 0;
         } else {
-            console.log(`this is the paycheck:${paycheck}`)
             changeBankBalance(paycheck);
             outstandingLoans -= loanPayment;
             paycheck = 0;
         }
     }
-    console.log(`Outstanding ${outstandingLoans}, balance ${getBankBalance()}`)
 }
 
 const bank = {
@@ -72,7 +85,8 @@ const bank = {
     buy,
     getOutstandingLoans,
     takeLoan,
-    takeSalary
+    takeSalary,
+    repay
 }
 
 

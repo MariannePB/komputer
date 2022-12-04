@@ -1,51 +1,68 @@
 import bank from "./bank.js";
 
+const updateElementContent = (elementId, content) => {
+    const element = document.getElementById(elementId);
+    element.innerText = content();
+}
+
 // Work actions
-const bankTotalElement = document.getElementById("bankTotal");
-const workButtonElement = document.getElementById("btnWork");
 
-const updateBankTotalElement = (newTotal) => {
-    bankTotalElement.innerText = newTotal
-}
+const workButton = document.getElementById("btnWork");
+btnWork.addEventListener("click", () => {
+        bank.work();
+        updateElementContent("earnings", bank.getPaycheck);
+    }
+);
 
-const handleWorkButtonClicked = () => {
-    bank.work()
-    const newTotal = bank.getPaycheck()
-    updateBankTotalElement(newTotal)
-}
-
-workButtonElement.addEventListener('click', handleWorkButtonClicked)
 
 // Deposit to bank 
-const balanceTotalElement = document.getElementById("BalanceTotal");
-const bankDepositElement = document.getElementById("btnDeposit");
 
-const updateBalanceTotalElement = (newBalance) => {
-    balanceTotalElement.innerText = newBalance
-}
-
-const handleDepositButtonClicked = () => {
+const depositButton = document.getElementById("btnDeposit");
+depositButton.addEventListener("click", () => {
     bank.takeSalary()
-    updateBalanceTotalElement(bank.getBankBalance())
-    updateBankTotalElement(bank.getPaycheck())
-    updateLoanTotalElement(bank.getOutstandingLoans())
-}
+    updateElementContent("BalanceTotal", bank.getBankBalance);
+    updateElementContent("earnings", bank.getPaycheck)
+    updateElementContent("outstandingLoan", bank.getOutstandingLoans);
+});
 
+// Deposit to loan
 
-bankDepositElement.addEventListener('click', handleDepositButtonClicked)
+const depositToLoanButton = document.getElementById("btnDepositAllToLoan");
+depositToLoanButton.addEventListener("click", () => {
+    bank.repay();
+    updateElementContent("outstandingLoan", bank.getOutstandingLoans);
+    updateElementContent("earnings", bank.getPaycheck);
+    updateElementContent("BalanceTotal", bank.getBankBalance);
+});
 
+// Applying for a loan
+
+const loanButton = document.getElementById("loanBtn");
+
+loanButton.addEventListener("click", () => {
+    const res = bank.takeLoan(
+        parseFloat(prompt("Please enter the amount of money you wish to loan:"))
+    );
+    if (!res) {
+        alert("You cant get a loan, the balance is too low balance, you already have a loan, or you did not enter a number");
+    } else {
+        alert("You got approved for a loan");
+    }
+    updateElementContent("outstandingLoan", bank.getOutstandingLoans);
+    updateElementContent("BalanceTotal", bank.getBankBalance);
+});
 
 
 // Alt som har med shopping å gjøre 
 const laptopsElement = document.getElementById("laptops");
 const priceElement = document.getElementById("price");
-const productNameElement = document.getElementById("productName")
-const productDescriptionElement = document.getElementById("description")
-const specsElement = document.getElementById("specs")
-const productImg = document.getElementById("picture")
+const productNameElement = document.getElementById("productName");
+const productDescriptionElement = document.getElementById("description");
+const specsElement = document.getElementById("specs");
+const productImg = document.getElementById("picture");
+const buyBtn = document.getElementById("buyLaptopBtn");
 
 const baseUrl = 'https://computer-api-production.up.railway.app/'
-
 
 //Storing content
 let laptops = [];
@@ -89,59 +106,19 @@ const handleDropdownChange = e => {
     
     specsElement.innerHTML = ''
     createSpecList(selectedLaptop.specs, specsElement)
-
-
 }
+
+const handleBuyLaptop = () => {
+    const selectedLaptop = laptops[laptopsElement.selectedIndex];
+    const res = bank.buy(selectedLaptop.price);
+    if (!res) {
+        alert("You cant buy this laptop, the balance is too low");
+    } else {
+        alert("You bought the laptop");
+    }
+    updateElementContent("BalanceTotal", bank.getBankBalance);
+}
+
+buyBtn.addEventListener("click", handleBuyLaptop);
 
 laptopsElement.addEventListener("change", handleDropdownChange);
-
-// Applying for a loan
-const loanButtonElement = document.getElementById("loanBtn");
-
-const handleLoan = () => {
-    const totalLoan = prompt("Please enter the amount of money you wish to loan:");
-
-    if (totalLoan  >= bank.getBankBalance() * 2 && totalLoan != null) { 
-        alert(`You got approved for a loan of ${totalLoan} NOK`);
-
-        const change = parseFloat(totalLoan) + bank.getBankBalance();
-        bank.takeLoan(parseFloat(totalLoan));
-        console.log(change);
-
-    } else {
-        alert("You cant get a loan, the balance is too low balance or you did not enter a number");
-    }
-
-
-}
-loanButtonElement.addEventListener("click", handleLoan);
-
-// display outstanding loan
-const loanTotalElement = document.getElementById("outstandingLoan");
-
-const updateLoanTotalElement = (newLoanTotal) => {
-    loanTotalElement.innerText = newLoanTotal;
-}
-const handleLoanButtonClicked = () => {
-    const newLoanTotal = bank.getOutstandingLoans()
-    updateLoanTotalElement(newLoanTotal);
-}
-
-loanButtonElement.addEventListener("click", handleLoanButtonClicked);
-
-// Deposit to loan 
-const outstandingLoanTotalElement = document.getElementById("outstandingLoan");
-const loanDepositElement = document.getElementById("loanBtn");
-
-const updateOutstandingLoanTotalElement = (newLoanBalance) => {
-    outstandingLoanTotalElement.innerText = newLoanBalance
-}
-
-const handleLoanDepositButtonClicked = () => {
-    bank.getOutstandingLoans()
-    updateOutstandingLoanTotalElement(bank.getBankBalance())
-}
-
-
-loanDepositElement.addEventListener('click', handleLoanDepositButtonClicked)
-
