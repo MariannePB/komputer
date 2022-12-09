@@ -52,6 +52,7 @@ section {
   font-weight: 700;
   border: none;
   margin-right: 3%;
+  margin-top: 3%;
 }
 
 .primaryBtn:hover {
@@ -64,6 +65,7 @@ section {
   background-color: #39c7ff;
   font-weight: 700;
   border: none;
+  margin-top: 3%;
 }
 
 .secondaryBtn:hover {

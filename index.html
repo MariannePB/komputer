@@ -21,16 +21,19 @@
         <div class="personalInfo">
             <section>
                 <h2>Joe Lennon</h2>
-                <p>Your current balance</p>
+                <label for="BalanceTotal">Your current balance:</label>
                 <p id="BalanceTotal">0</p>
-                <button class="primaryBtn" id="test">Apply for a loan</button>
+                <label for="outstandingLoan" id="outstandingLoanLabel" hidden>Outstanding loan:</label>
+                <p id="outstandingLoan" hidden>You have no loan</p>
+                <button class="primaryBtn" id="loanBtn">Apply for a loan</button>
             </section>
 
             <section>
                 <h2>Attend work</h2>
-                <label for="bankTotal">Total earnings</label>
-                <p id="bankTotal">0</p>
+                <label for="bankTotal">Total earnings:</label>
+                <p id="earnings">0</p>
                 <button class="primaryBtn" id="btnDeposit">Deposit to bank</button>
+                <button class="primaryBtn" id="btnDepositAllToLoan" hidden>Deposit all to loan</button>
                 <button class="secondaryBtn" id="btnWork">Work more</button>
             </section>
         </div>
@@ -52,9 +55,13 @@
                 <p id="description">Disc</p>
                 <ul id="specs"></ul>
 
-                <div class="stock">Only X left</div>
+                <label for="stock">Stock status:</label>
+                <div id="stock">
+                    <p></p>
+                </div>
+                <br>
                 <span id="price"></span>
-                <button class="buyBtn" id="#">Buy</button>
+                <button class="buyBtn" id="buyLaptopBtn">Buy</button>
             </section>
         </div>
         
